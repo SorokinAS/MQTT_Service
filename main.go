@@ -1,57 +1,33 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"encoding/json"
+	"log"
 
-	mqtt "github.com/eclipse/paho.mqtt.golang"
+	gateway "gateway/mqtt"
+	"net/http"
 )
 
-var (
-	opts                                  = mqtt.NewClientOptions() //for mqtt subClient options
-	subClient                             = mqtt.NewClient(opts)    //for mqtt subClient
-	topic                                 = "measurements/#"
-	messagePubHandler mqtt.MessageHandler = func(subClient mqtt.Client, msg mqtt.Message) {
-		fmt.Println(string(msg.Payload()))
-	}
-	connectHandler mqtt.OnConnectHandler = func(subClient mqtt.Client) {
-		fmt.Println("Connected")
-	}
-	connectLostHandler mqtt.ConnectionLostHandler = func(subClient mqtt.Client, err error) {
-		fmt.Printf("Connect lost: %v", err)
-	}
-)
-
-func ConnectMQTT() {
-	opts.AddBroker("tcp://127.0.0.1:1883")
-	opts.SetKeepAlive(15 * time.Second)
-	opts.SetCleanSession(true)
-	opts.SetConnectTimeout(5 * time.Second)
-	opts.SetConnectRetry(true)
-	opts.SetConnectRetryInterval(15 * time.Second)
-	opts.SetAutoReconnect(true).SetMaxReconnectInterval(15 * time.Second)
-	opts.SetDefaultPublishHandler(messagePubHandler)
-	opts.OnConnect = connectHandler
-	opts.OnConnectionLost = connectLostHandler
-	subClient = mqtt.NewClient(opts)
-	token := subClient.Connect()
-	if token.Wait() && token.Error() != nil {
-		panic(token.Error())
-	}
-	sub(topic)
-}
-
-func sub(topic string) {
-	token := subClient.Subscribe(topic, 0, nil)
-	token.Wait()
+type Com struct {
+	EquipmentType string      `json:"equipmentType"`
+	CommandType   string      `json:"commandType"`
+	Command       interface{} `json:"command"`
 }
 
 func main() {
-	ConnectMQTT()
-	ticker := time.NewTicker(10 * time.Second)
-	for {
-		select {
-		case <-ticker.C:
+	gateway.MQTTSub()
+
+	http.HandleFunc("/command", func(w http.ResponseWriter, r *http.Request) {
+		var c Com
+		err := json.NewDecoder(r.Body).Decode(&c)
+		if err != nil {
+			log.Fatal(err)
 		}
-	}
+		log.Print("Получено сообщение: ")
+		log.Print("command/"+c.EquipmentType+"_"+c.CommandType, c.Command.(string))
+		// gateway.Pub("command/"+c.EquipmentType+"_"+c.CommandType, c.Command.(string))
+	})
+
+	log.Print("Connecting...")
+	http.ListenAndServe(":8604", nil)
 }
