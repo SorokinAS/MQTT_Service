@@ -2,7 +2,6 @@ package mqtt
 
 import (
 	"log"
-	"os"
 	"regexp"
 	"time"
 
@@ -13,10 +12,12 @@ var (
 	opts              = mqtt.NewClientOptions() //for mqtt client options
 	client            = mqtt.NewClient(opts)    //for mqtt client
 	meas              string
+	topicName         string
 	messagePubHandler mqtt.MessageHandler = func(subClient mqtt.Client, msg mqtt.Message) {
+		topicName = msg.Topic()
 		meas = string(msg.Payload())
 		changeString(&meas, *&reg)
-		log.Println(meas)
+		sendMeasurements(&meas, topicName)
 	}
 	connectHandler mqtt.OnConnectHandler = func(subClient mqtt.Client) {
 		log.Println("Connected to MQTT")
@@ -24,15 +25,12 @@ var (
 	connectLostHandler mqtt.ConnectionLostHandler = func(subClient mqtt.Client, err error) {
 		log.Fatalf("Connect lost: %v", err)
 	}
-	reg = regexp.MustCompile(`\[|\]`)
-	//ENVIRONMENT VARIABLES
-	subTopic    = os.Getenv("MQTT_PORT")
-	mqttPort    = os.Getenv("MQTT_PORT")
-	mqttAddress = os.Getenv("MQTT_ADDRESS")
+	reg      = regexp.MustCompile(`\[|\]`)
+	subTopic = "measurements/#"
 )
 
 func connectMQTT() {
-	opts.AddBroker("tcp://" + mqttAddress + ":" + mqttPort)
+	opts.AddBroker("tcp://127.0.0.1:1883")
 	opts.SetKeepAlive(15 * time.Second)
 	opts.SetCleanSession(true)
 	opts.SetConnectTimeout(5 * time.Second)
@@ -62,12 +60,7 @@ func Pub(pubTopic string, mes string) {
 	token.Wait()
 }
 
-func MQTTSub() {
-	if mqttPort == "" || mqttAddress == "" || subTopic == "" {
-		log.Fatal("Empty ENV variable:\n 'MQTT_PORT': ", mqttPort,
-			"\n 'MQTT_ADDRESS': ", mqttAddress,
-			"\n 'SUB_TOPIC': ", subTopic)
-	}
+func MQTT() {
 	connectMQTT()
 	ticker := time.NewTicker(2 * time.Second)
 	for {
