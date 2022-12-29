@@ -1,6 +1,6 @@
 # GatewayMQTT
 
-My first big project using Go. 
+My first experience using Go. 
 Used Go 1.19.3 
 
 A gateway for transmitting data measurements from equipment/meters of the microgrid model made in Matlab Simulink.
