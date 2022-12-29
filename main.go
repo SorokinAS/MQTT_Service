@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"log"
-
+	"fmt"
 	gateway "gateway/mqtt"
+	"log"
 	"net/http"
 )
 
@@ -15,7 +15,7 @@ type Com struct {
 }
 
 func main() {
-	gateway.MQTTSub()
+	go gateway.MQTTSub()
 
 	http.HandleFunc("/command", func(w http.ResponseWriter, r *http.Request) {
 		var c Com
@@ -23,9 +23,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Print("Получено сообщение: ")
-		log.Print("command/"+c.EquipmentType+"_"+c.CommandType, c.Command.(string))
-		// gateway.Pub("command/"+c.EquipmentType+"_"+c.CommandType, c.Command.(string))
+		gateway.Pub("command/"+c.EquipmentType+"_"+c.CommandType, fmt.Sprint(c.Command))
 	})
 
 	log.Print("Connecting...")
