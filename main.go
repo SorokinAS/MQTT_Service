@@ -6,6 +6,12 @@ import (
 	gateway "gateway/mqtt"
 	"log"
 	"net/http"
+	"os"
+)
+
+var (
+	c    Com
+	port = os.Getenv("SERVER_PORT")
 )
 
 type Com struct {
@@ -18,7 +24,6 @@ func main() {
 	go gateway.MQTTSub()
 
 	http.HandleFunc("/command", func(w http.ResponseWriter, r *http.Request) {
-		var c Com
 		err := json.NewDecoder(r.Body).Decode(&c)
 		if err != nil {
 			log.Fatal(err)
@@ -27,5 +32,8 @@ func main() {
 	})
 
 	log.Print("Connecting...")
-	http.ListenAndServe(":8604", nil)
+	if port == "" {
+		log.Fatal("Empty ENV variable 'SERVER_PORT'")
+	}
+	http.ListenAndServe(":"+port, nil)
 }

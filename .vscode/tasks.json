@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    
+    "tasks": [
+        {
+            "command": "go",
+            "type": "process",
+            "label": "go-run",
+            "args": [
+                "run",
+                "${workspaceRoot}/main.go"
+            ],
+            "isBuildCommand": true,
+            "options": {
+                //ENVIRONMENT VARIABLES
+                "env": {
+                    "SERVER_PORT": "8604",
+                    "MQTT_ADDRESS": "127.0.0.1",
+                    "MQTT_PORT": "1883",
+                    "SUB_TOPIC": "measurements/#"
+
+                    
+                }
+            }
+            
+        },
+    ]
+}
