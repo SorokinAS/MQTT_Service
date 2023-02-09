@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Prod XML config-->
+<root>
+    <server>
+        <address></address>
+        <port>8604</port>
+    </server>
+    <tsdb>
+        <address>tsdb</address>
+        <port>8081</port>
+        <urn>save</urn>
+        <timeout>1.0</timeout>
+    </tsdb>
+    <broker>
+        <address>127.0.0.1</address>
+        <port>1883</port>
+    </broker>
+    <measurements>
+          <value topic="measurements/battery1/soc" equipment="battery1" mag="0.0" ang="0.0" />
+          <value topic="measurements/battery1/power" equipment="battery1" mag="0.0" ang="0.0" />
+          <value topic="measurements/battery2/soc" equipment="battery2" mag="0.0" ang="0.0" />
+          <value topic="measurements/battery2/power" equipment="battery2" mag="0.0" ang="0.0" />
+          <value topic="measurements/dl1/current" equipment="dynamicLoad1" mag="100.0" ang ="0.0" />
+          <value topic="measurements/dl1/voltage" equipment="dynamicLoad1" mag="380.0" ang ="0.0" />
+          <value topic="measurements/dl1/frequency" equipment="dynamicLoad1" mag="50.0" ang ="0.0" />
+          <value topic="measurements/dl1/power" equipment="dynamicLoad1" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/dl1/energy" equipment="dynamicLoad1" mag="4500.0" ang="0.0" />
+          <value topic="measurements/dl2/current" equipment="dynamicLoad2" mag="100.0" ang ="0.0" />
+          <value topic="measurements/dl2/voltage" equipment="dynamicLoad2" mag="380.0" ang ="0.0" />
+          <value topic="measurements/dl2/frequency" equipment="dynamicLoad2" mag="50.0" ang ="0.0"/>
+          <value topic="measurements/dl2/power" equipment="dynamicLoad2" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/dl2/energy" equipment="dynamicLoad2" mag="4500.0" ang="0.0" />
+          <value topic="measurements/dl3/current" equipment="dynamicLoad3" mag="100.0" ang ="0.0" />
+          <value topic="measurements/dl3/voltage" equipment="dynamicLoad3" mag="380.0" ang ="0.0" />
+          <value topic="measurements/dl3/frequency" equipment="dynamicLoad3" mag="50.0" ang ="0.0" />
+          <value topic="measurements/dl3/power" equipment="dynamicLoad3" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/dl3/energy" equipment="dynamicLoad3" mag="4500.0" ang="0.0" />
+          <value topic="measurements/sl1/current" equipment="staticLoad1" mag="100.0" ang ="0.0" />
+          <value topic="measurements/sl1/voltage" equipment="staticLoad1" mag="380.0" ang ="0.0" />
+          <value topic="measurements/sl1/frequency" equipment="staticLoad1" mag="50.0" ang ="0.0" />
+          <value topic="measurements/sl1/power" equipment="staticLoad1" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/sl1/energy" equipment="staticLoad1" mag="4500.0" ang="0.0" />
+          <value topic="measurements/sl2/current" equipment="staticLoad2" mag="100.0" ang ="0.0" />
+          <value topic="measurements/sl2/voltage" equipment="staticLoad2" mag="380.0" ang ="0.0" />
+          <value topic="measurements/sl2/frequency" equipment="staticLoad2" mag="50.0" ang ="0.0" />
+          <value topic="measurements/sl2/power" equipment="staticLoad2" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/sl2/energy" equipment="staticLoad2" mag="4500.0" ang="0.0" />
+		  <value topic="measurements/sl3/current" equipment="staticLoad3" mag="100.0" ang ="0.0" />
+          <value topic="measurements/sl3/voltage" equipment="staticLoad3" mag="380.0" ang ="0.0" />
+          <value topic="measurements/sl3/frequency" equipment="staticLoad3" mag="50.0" ang ="0.0" />
+          <value topic="measurements/sl3/power" equipment="staticLoad3" mag="3000.0" ang ="0.0" />
+          <value topic="measurements/sl3/energy" equipment="staticLoad3" mag="4500.0" ang="0.0" />
+          <value topic="measurements/pv/power" equipment="solarPanel" mag="0.0" ang="0.0" />
+          <value topic="measurements/wind/power" equipment="windGenerator" mag="0.0" ang="0.0" />
+          <value topic="measurements/disel/current" equipment="diselGenerator" mag="0.0" ang="0.0" />
+          <value topic="measurements/disel/voltage" equipment="diselGenerator" mag="0.0" ang="0.0" />
+          <value topic="measurements/disel/power" equipment="diselGenerator" mag="0.0" ang="0.0" />
+          <value topic="measurements/transformer/current" equipment="transformer" mag="0.0" ang="0.0" />
+          <value topic="measurements/transformer/voltage" equipment="transformer" mag="0.0" ang="0.0" />
+		  <value topic="measurements/transformer/frequency" equipment="transformer" mag="0.0" ang="0.0" />
+          <value topic="measurements/transformer/power" equipment="transformer" mag="0.0" ang="0.0" />
+          <value topic="measurements/transfromer/tap" equipment="transformer" mag="0.0" ang="0.0" />
+          <value topic="measurements/erouter/power" equipment="erouter" mag="0.0" ang="0.0" />
+          <value topic="measurements/gfi/frequency" equipment="gridFormingInverter" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter1/ap" equipment="inverter1" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter1/rp" equipment="inverter1" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter1/mode" equipment="inverter1" mag="1.0" ang="0.0" />
+		  <value topic="measurements/inverter2/ap" equipment="inverter2" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter2/rp" equipment="inverter2" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter2/mode" equipment="inverter2" mag="1.0" ang="0.0" />
+		  <value topic="measurements/inverter3/ap" equipment="inverter3" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter3/rp" equipment="inverter3" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter3/mode" equipment="inverter3" mag="1.0" ang="0.0" />
+    </measurements>
+    <commands>
+          <action topic="command/battery1_activePower" equipment="battery1"/>
+          <action topic="command/battery2_activePower" equipment="battery2"/>
+          <action topic="command/dynamicLoad1_activePower" equipment="dynamicLoad1"/>
+          <action topic="command/dynamicLoad2_activePower" equipment="dynamicLoad2"/>
+          <action topic="command/dynamicLoad3_activePower" equipment="dynamicLoad3"/>
+          <action topic="command/disel_mode" equipment="diselGenerator"/>
+          <action topic="command/transformer_tap" equipment="transformer"/>
+          <action topic="command/erouter_activePower" equipment="erouter"/>
+          <action topic="command/gridFormingInverter" equipment="gridFormingInverter"/>
+          <action topic="command/inverter1_activePower" equipment="inverter1"/>
+          <action topic="command/inverter1_reactivePower" equipment="inverter1"/>
+          <action topic="command/inverter1_mode" equipment="inverter1"/>
+		  <action topic="command/inverter2_activePower" equipment="inverter2"/>
+          <action topic="command/inverter2_reactivePower" equipment="inverter2"/>
+          <action topic="command/inverter2_mode" equipment="inverter2"/>
+          <action topic="command/switch1_mode" equipment="switch1"/>
+          <action topic="command/switch2_mode" equipment="switch2"/>
+          <action topic="command/switch3_mode" equipment="switch3"/>
+          <action topic="command/switch4_mode" equipment="switch4"/>
+          <action topic="command/switch5_mode" equipment="switch5"/>
+          <action topic="command/switch6_mode" equipment="switch6"/>
+          <action topic="command/switch7_mode" equipment="switch7"/>
+          <action topic="command/switch8_mode" equipment="switch8"/>
+          <action topic="command/switch9_mode" equipment="switch9"/>
+          <action topic="command/switch10_mode" equipment="switch10"/>
+          <action topic="command/switch11_mode" equipment="switch11"/>
+          <action topic="command/switch12_mode" equipment="switch12"/>
+          <action topic="command/switch13_mode" equipment="switch13"/>
+    </commands>
+</root>

@@ -1,16 +1,17 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	syscfg "gateway/configuration"
 	gateway "gateway/mqtt"
-	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	c    Com
-	port = "8604"
+	command   Com
+	sysconfig = syscfg.GetEquip("equipment.xml")
 )
 
 type Com struct {
@@ -22,14 +23,19 @@ type Com struct {
 func main() {
 	go gateway.MQTT()
 
-	http.HandleFunc("/command", func(w http.ResponseWriter, r *http.Request) {
-		err := json.NewDecoder(r.Body).Decode(&c)
-		if err != nil {
-			log.Fatal(err)
-		}
-		gateway.Pub("command/"+c.EquipmentType+"_"+c.CommandType, fmt.Sprint(c.Command))
-	})
+	r := gin.Default()
 
-	log.Print("Connecting to 127.0.0.1:8604")
-	http.ListenAndServe(":"+port, nil)
+	r.POST("/command", sendCommand)
+
+	r.Run(sysconfig.Server.Address + ":" + sysconfig.Server.Port)
+}
+
+func sendCommand(c *gin.Context) {
+
+	if err := c.BindJSON(&command); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	gateway.Pub("command/"+command.EquipmentType+"_"+command.CommandType, fmt.Sprint(command.Command))
 }
