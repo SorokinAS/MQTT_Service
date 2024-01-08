@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	opts   *mqtt.ClientOptions //for mqtt client options
-	client mqtt.Client         //for mqtt client
+	opts   = mqtt.NewClientOptions() //for mqtt client options //for mqtt client options
+	client = mqtt.NewClient(opts)    //for mqtt client
 )
 
 func connectMQTT() {

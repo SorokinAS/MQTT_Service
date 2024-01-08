@@ -2,7 +2,7 @@ package main
 
 import (
 	"gateway/handler"
-	mqtt "gateway/mqtt"
+	"gateway/mqtt"
 	"log"
 
 	"github.com/joho/godotenv"
