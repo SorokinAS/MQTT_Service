@@ -8,7 +8,7 @@ In this project are used:
   - Gin (a little exp);
   - MQTT (without security measures for data transmission (using TLS/SSL, setting a login and password for the client)).
 
-![Image alt](https://github.com/SorokinAS)  
+![Image alt](https://github.com/SorokinAS/GatewayMQTT/blob/master/docs/Diagram.png)  
 
 
 ### Build project
