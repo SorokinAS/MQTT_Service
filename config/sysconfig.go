@@ -27,29 +27,9 @@ type Action struct {
 	Equipment string `xml:"equipment,attr"`
 }
 
-type Mqtt struct {
-	Address string `xml:"address"`
-	Port    string `xml:"port"`
-}
-
-type Db struct {
-	Address string `xml:"address"`
-	Port    string `xml:"port"`
-	Urn     string `xml:"urn"`
-	Timeout string `xml:"timeout"`
-}
-
-type Server struct {
-	Address string `xml:"address"`
-	Port    string `xml:"port"`
-}
-
 type Root struct {
-	Server Server       `xml:"server"`
-	Tsdb   Db           `xml:"tsdb"`
-	Broker Mqtt         `xml:"broker"`
-	Mes    Measurements `xml:"measurements"`
-	Com    Commands     `xml:"commands"`
+	Mes Measurements `xml:"measurements"`
+	Com Commands     `xml:"commands"`
 }
 
 func GetEquip(filename string) Root {
@@ -60,6 +40,9 @@ func GetEquip(filename string) Root {
 	}
 	defer xmlFile.Close()
 	byteValue, _ := io.ReadAll(xmlFile)
-	xml.Unmarshal(byteValue, &equip)
+	err = xml.Unmarshal(byteValue, &equip)
+	if err != nil {
+		log.Fatal("Failed unmarshall ", err)
+	}
 	return equip
 }

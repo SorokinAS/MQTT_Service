@@ -5,19 +5,15 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
 var (
-	values    []string
-	mes       Measurement
-	equipment string
-	mag       float64
-	ang       float64
-	url       = "http://127.0.0.1:8081/save"
-	res       map[string]interface{}
+	url = os.Getenv("TSDB_URL")
+	// sysconfig = cfg.GetEquip(".\\config\\equipment.xml")
 )
 
 type Measurement struct {
@@ -37,8 +33,12 @@ func (mes *Measurement) newMeasurement(topic *string, equip *string, mag *float6
 
 }
 
-func sendMeasurements(msg *string, topic string) {
-	values = strings.Split(*msg, ",")
+func sendMeasurements(msg *string, topic *string) {
+	var equipment string
+	var mag, ang float64
+	var mes Measurement
+	res := make(map[string]interface{})
+	values := strings.Split(*msg, ",")
 	mag, _ = strconv.ParseFloat(values[0], 32)
 	if len(values) > 1 {
 		ang, _ = strconv.ParseFloat(values[1], 32)
@@ -46,8 +46,8 @@ func sendMeasurements(msg *string, topic string) {
 		ang = 0.0
 	}
 
-	equipment = getEquipment(&topic)
-	mes.newMeasurement(&topic, &equipment, &mag, &ang)
+	equipment = getEquipment(topic)
+	mes.newMeasurement(topic, &equipment, &mag, &ang)
 	message, err := json.Marshal(mes)
 	if err != nil {
 		log.Fatal("Invalid Marshal message with measurement: ", err)

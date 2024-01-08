@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/eclipse/paho.mqtt.golang v1.4.2
 	github.com/gin-gonic/gin v1.8.2
+	github.com/joho/godotenv v1.5.1
 )
 
 require (

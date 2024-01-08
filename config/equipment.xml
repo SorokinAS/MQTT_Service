@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Prod XML config-->
 <root>
-    <server>
-        <address></address>
-        <port>8604</port>
-    </server>
-    <tsdb>
-        <address>tsdb</address>
-        <port>8081</port>
-        <urn>save</urn>
-        <timeout>1.0</timeout>
-    </tsdb>
-    <broker>
-        <address>127.0.0.1</address>
-        <port>1883</port>
-    </broker>
     <measurements>
           <value topic="measurements/battery1/soc" equipment="battery1" mag="0.0" ang="0.0" />
           <value topic="measurements/battery1/power" equipment="battery1" mag="0.0" ang="0.0" />
@@ -45,7 +31,7 @@
           <value topic="measurements/sl2/frequency" equipment="staticLoad2" mag="50.0" ang ="0.0" />
           <value topic="measurements/sl2/power" equipment="staticLoad2" mag="3000.0" ang ="0.0" />
           <value topic="measurements/sl2/energy" equipment="staticLoad2" mag="4500.0" ang="0.0" />
-		  <value topic="measurements/sl3/current" equipment="staticLoad3" mag="100.0" ang ="0.0" />
+	    <value topic="measurements/sl3/current" equipment="staticLoad3" mag="100.0" ang ="0.0" />
           <value topic="measurements/sl3/voltage" equipment="staticLoad3" mag="380.0" ang ="0.0" />
           <value topic="measurements/sl3/frequency" equipment="staticLoad3" mag="50.0" ang ="0.0" />
           <value topic="measurements/sl3/power" equipment="staticLoad3" mag="3000.0" ang ="0.0" />
@@ -57,7 +43,7 @@
           <value topic="measurements/disel/power" equipment="diselGenerator" mag="0.0" ang="0.0" />
           <value topic="measurements/transformer/current" equipment="transformer" mag="0.0" ang="0.0" />
           <value topic="measurements/transformer/voltage" equipment="transformer" mag="0.0" ang="0.0" />
-		  <value topic="measurements/transformer/frequency" equipment="transformer" mag="0.0" ang="0.0" />
+	    <value topic="measurements/transformer/frequency" equipment="transformer" mag="0.0" ang="0.0" />
           <value topic="measurements/transformer/power" equipment="transformer" mag="0.0" ang="0.0" />
           <value topic="measurements/transfromer/tap" equipment="transformer" mag="0.0" ang="0.0" />
           <value topic="measurements/erouter/power" equipment="erouter" mag="0.0" ang="0.0" />
@@ -65,10 +51,10 @@
           <value topic="measurements/inverter1/ap" equipment="inverter1" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter1/rp" equipment="inverter1" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter1/mode" equipment="inverter1" mag="1.0" ang="0.0" />
-		  <value topic="measurements/inverter2/ap" equipment="inverter2" mag="0.0" ang="0.0" />
+	    <value topic="measurements/inverter2/ap" equipment="inverter2" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter2/rp" equipment="inverter2" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter2/mode" equipment="inverter2" mag="1.0" ang="0.0" />
-		  <value topic="measurements/inverter3/ap" equipment="inverter3" mag="0.0" ang="0.0" />
+          <value topic="measurements/inverter3/ap" equipment="inverter3" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter3/rp" equipment="inverter3" mag="0.0" ang="0.0" />
           <value topic="measurements/inverter3/mode" equipment="inverter3" mag="1.0" ang="0.0" />
     </measurements>
@@ -85,7 +71,7 @@
           <action topic="command/inverter1_activePower" equipment="inverter1"/>
           <action topic="command/inverter1_reactivePower" equipment="inverter1"/>
           <action topic="command/inverter1_mode" equipment="inverter1"/>
-		  <action topic="command/inverter2_activePower" equipment="inverter2"/>
+	    <action topic="command/inverter2_activePower" equipment="inverter2"/>
           <action topic="command/inverter2_reactivePower" equipment="inverter2"/>
           <action topic="command/inverter2_mode" equipment="inverter2"/>
           <action topic="command/switch1_mode" equipment="switch1"/>

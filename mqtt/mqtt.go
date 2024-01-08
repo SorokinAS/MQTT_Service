@@ -2,11 +2,17 @@ package mqtt
 
 import (
 	"log"
+	"os"
 	"regexp"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
+
+type Broker struct {
+	Host     string
+	SubTopic string
+}
 
 var (
 	opts              = mqtt.NewClientOptions() //for mqtt client options
@@ -17,7 +23,7 @@ var (
 		topicName = msg.Topic()
 		meas = string(msg.Payload())
 		changeString(&meas, *&reg)
-		sendMeasurements(&meas, topicName)
+		sendMeasurements(&meas, &topicName)
 	}
 	connectHandler mqtt.OnConnectHandler = func(subClient mqtt.Client) {
 		log.Println("Connected to MQTT")
@@ -25,12 +31,15 @@ var (
 	connectLostHandler mqtt.ConnectionLostHandler = func(subClient mqtt.Client, err error) {
 		log.Fatalf("Connect lost: %v", err)
 	}
-	reg      = regexp.MustCompile(`\[|\]`)
-	subTopic = "measurements/#"
+	reg = regexp.MustCompile(`\[|\]`)
 )
 
 func connectMQTT() {
-	opts.AddBroker("tcp://127.0.0.1:1883")
+	broker := Broker{
+		Host:     os.Getenv("MQTT_BROKER_URL"),
+		SubTopic: os.Getenv("MQTT_SUB_TOPIC"),
+	}
+	opts.AddBroker(broker.Host)
 	opts.SetKeepAlive(15 * time.Second)
 	opts.SetCleanSession(true)
 	opts.SetConnectTimeout(5 * time.Second)
@@ -45,7 +54,7 @@ func connectMQTT() {
 	if token.Wait() && token.Error() != nil {
 		log.Fatal(token.Error())
 	}
-	sub(subTopic)
+	sub(broker.SubTopic)
 }
 
 func sub(subTopic string) {
@@ -60,7 +69,7 @@ func Pub(pubTopic string, mes string) {
 	token.Wait()
 }
 
-func MQTT() {
+func Run() {
 	connectMQTT()
 	ticker := time.NewTicker(2 * time.Second)
 	for {
