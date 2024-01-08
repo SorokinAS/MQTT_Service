@@ -9,37 +9,29 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-type Broker struct {
-	Host     string
-	SubTopic string
-}
-
 var (
-	opts              = mqtt.NewClientOptions() //for mqtt client options
-	client            = mqtt.NewClient(opts)    //for mqtt client
-	meas              string
-	topicName         string
-	messagePubHandler mqtt.MessageHandler = func(subClient mqtt.Client, msg mqtt.Message) {
-		topicName = msg.Topic()
-		meas = string(msg.Payload())
-		changeString(&meas, *&reg)
-		sendMeasurements(&meas, &topicName)
-	}
-	connectHandler mqtt.OnConnectHandler = func(subClient mqtt.Client) {
-		log.Println("Connected to MQTT")
-	}
-	connectLostHandler mqtt.ConnectionLostHandler = func(subClient mqtt.Client, err error) {
-		log.Fatalf("Connect lost: %v", err)
-	}
-	reg = regexp.MustCompile(`\[|\]`)
+	opts   *mqtt.ClientOptions //for mqtt client options
+	client mqtt.Client         //for mqtt client
 )
 
 func connectMQTT() {
-	broker := Broker{
-		Host:     os.Getenv("MQTT_BROKER_URL"),
-		SubTopic: os.Getenv("MQTT_SUB_TOPIC"),
-	}
-	opts.AddBroker(broker.Host)
+	var (
+		meas              string
+		topicName         string
+		messagePubHandler mqtt.MessageHandler = func(subClient mqtt.Client, msg mqtt.Message) {
+			topicName = msg.Topic()
+			meas = string(msg.Payload())
+			changeString(&meas)
+			sendMeasurements(&meas, &topicName)
+		}
+		connectHandler mqtt.OnConnectHandler = func(subClient mqtt.Client) {
+			log.Println("Connected to MQTT")
+		}
+		connectLostHandler mqtt.ConnectionLostHandler = func(subClient mqtt.Client, err error) {
+			log.Fatalf("Connect lost: %v", err)
+		}
+	)
+	opts.AddBroker(os.Getenv("MQTT_BROKER_URL"))
 	opts.SetKeepAlive(15 * time.Second)
 	opts.SetCleanSession(true)
 	opts.SetConnectTimeout(5 * time.Second)
@@ -54,7 +46,7 @@ func connectMQTT() {
 	if token.Wait() && token.Error() != nil {
 		log.Fatal(token.Error())
 	}
-	sub(broker.SubTopic)
+	sub(os.Getenv("MQTT_SUB_TOPIC"))
 }
 
 func sub(subTopic string) {
@@ -63,7 +55,7 @@ func sub(subTopic string) {
 }
 
 func Pub(pubTopic string, mes string) {
-	changeString(&mes, *&reg)
+	changeString(&mes)
 	log.Print(mes)
 	token := client.Publish(pubTopic, 0, false, mes)
 	token.Wait()
@@ -79,6 +71,7 @@ func Run() {
 	}
 }
 
-func changeString(s *string, re *regexp.Regexp) {
+func changeString(s *string) {
+	re := regexp.MustCompile(`\[|\]`)
 	*s = string(re.ReplaceAll([]byte(*s), []byte("")))
 }
