@@ -8,6 +8,8 @@ In this project are used:
   - Gin (a little exp);
   - MQTT (without security measures for data transmission (using TLS/SSL, setting a login and password for the client)).
 
+An example of interaction with the gateway is shown in the figure:
+
 ![Image alt](https://github.com/SorokinAS/GatewayMQTT/blob/master/docs/Diagram.png)  
 
 
