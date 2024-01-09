@@ -4,13 +4,14 @@ import (
 	"gateway/handler"
 	"gateway/mqtt"
 	"log"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
 )
 
 func init() {
-	// if err := godotenv.Load(".\\config\\.env"); err != nil { // for Windows
-	if err := godotenv.Load("./config/.env"); err != nil { // for Linux
+	configPath := filepath.Join("./config", ".env")
+	if err := godotenv.Load(configPath); err != nil {
 		log.Fatal("Failed to read .env", err)
 	}
 }
