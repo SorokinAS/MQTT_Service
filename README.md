@@ -12,8 +12,22 @@ An example of interaction with the gateway is shown in the figure:
 
 ![Image alt](https://github.com/SorokinAS/GatewayMQTT/blob/master/docs/Diagram.png)  
 
+### Run in locally
+For run localy you need to enter the root directory project and run the project. For example:  
 
-### Build project
+Windows
+```shell
+cd C:\GoProjects\GatewayMQTT
+go run .\cmd\main.go
+```
+Linux
+```shell
+cd /home/ansorokin/GoProjects/GatewayMQTT
+go run ./cmd/main.go
+```
+
+
+### Run in Docker
 For build project you need to execution next commands:
 ```shell
 docker build -t <image_name> .
