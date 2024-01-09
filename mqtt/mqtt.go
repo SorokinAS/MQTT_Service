@@ -16,11 +16,9 @@ var (
 
 func connectMQTT() {
 	var (
-		meas              string
-		topicName         string
 		messagePubHandler mqtt.MessageHandler = func(subClient mqtt.Client, msg mqtt.Message) {
-			topicName = msg.Topic()
-			meas = string(msg.Payload())
+			topicName := msg.Topic()
+			meas := string(msg.Payload())
 			changeString(&meas)
 			sendMeasurements(&meas, &topicName)
 		}
