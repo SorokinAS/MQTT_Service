@@ -13,27 +13,22 @@ An example of interaction with the gateway is shown in the figure:
 ![Image alt](https://github.com/SorokinAS/GatewayMQTT/blob/master/docs/Diagram.png)  
 
 ### Run in locally
-For run localy you need to enter the root directory project and run the project. For example:  
+For run localy you need to enter the root directory project and run the project. Also you need to have installed make. For example:  
 
-Windows
 ```shell
 cd C:\GoProjects\GatewayMQTT
-go run .\cmd\main.go
+make run-local
 ```
-Linux
-```shell
-cd /home/ansorokin/GoProjects/GatewayMQTT
-go run ./cmd/main.go
-```
-
 
 ### Run in Docker
-For build project you need to execution next commands:
+For build and run project from docker-container you need to have installed make and to execute next command:
 ```shell
-docker build -t <image_name> .
+make build-container
 ```
+
+For run project from docker-container you need to to execute next command:
 ```shell
-docker run --name <name_of_container> <image_name>
+make run-container
 ```
 
 Upon successful start, you can see the logs of the gin starting and the connection log to the mqtt broker. Yes, the mqtt broker is required for performance. Use docker-compose for do it.
